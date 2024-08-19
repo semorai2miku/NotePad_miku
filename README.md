@@ -1,2 +1,2 @@
 # NotePad_miku
-Individual exercise
+个人练习项目
