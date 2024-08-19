@@ -1,0 +1,50 @@
+﻿<Window x:Class="Notepad_miku.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Notepad_miku"
+        xmlns:viewmodels="clr-namespace:Notepad_miku.ViewModels" 
+        mc:Ignorable="d"
+        Title="Notepad_miku" Height="800" Width="600">
+    <Window.DataContext>
+        <viewmodels:MainViewModel/>
+    </Window.DataContext>
+    <DockPanel Margin="1">
+        <Menu DockPanel.Dock="Top">
+            <Menu.Items>
+                <MenuItem Header="文件" DataContext="{Binding File}">
+                    <MenuItem Header="新建" Command="{Binding NewCommand}"/>
+                    <MenuItem Header="打开" Command="{Binding OpenCommand}"/>
+                    <MenuItem Header="保存" Command="{Binding SaveCommand}"/>
+                    <MenuItem Header="另存为" Command="{Binding SaveAsCommand}"/>
+                </MenuItem>
+                <MenuItem Header="格式" DataContext="{Binding Editor}">
+                    <MenuItem Header="字体" Command="{Binding FormatCommand}"/>
+                    <MenuItem Header="自动换行" Command="{Binding WrapCommand}" IsChecked="{Binding Format.isWrapped}"/>
+                </MenuItem>
+                <MenuItem Header="帮助" DataContext="{Binding Help}">
+                    <MenuItem Header="关于" Command="{Binding HelpCommand}"/>
+                </MenuItem>
+            </Menu.Items>
+        </Menu>
+
+        <DockPanel>
+            <TextBlock DockPanel.Dock="Bottom" 
+                       DataContext="{Binding File.Document}"
+                       Text="{Binding FilePath}"/>
+
+            <TextBox DockPanel.Dock="Top"
+                       VerticalScrollBarVisibility="Visible"
+                     DataContext="{Binding Editor}"
+                     FontFamily="{Binding Format.Family}"
+                     FontSize="{Binding Format.Size}"
+                     FontStyle="{Binding Format.Style}"
+                     FontWeight="{Binding Format.Weight}"
+                     TextWrapping="{Binding Format.Wrap}"
+                     AcceptsReturn="True"
+                     AcceptsTab="True"
+                     Text="{Binding Document.Text, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+        </DockPanel>
+    </DockPanel>
+</Window>
